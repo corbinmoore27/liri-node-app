@@ -2,6 +2,8 @@ require("dotenv").config();
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
+var fs = require("fs");
+
 
 var action = process.argv[2];
 var value = process.argv[3];
