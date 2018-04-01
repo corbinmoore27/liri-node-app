@@ -23,3 +23,21 @@ switch (action) {
       doWhatItSays();
       break;
     }
+
+function myTweets() {
+    var params = {screen_name: "cmoore_leo27"};
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+    if (!error) {
+    console.log(tweets);
+    }
+    });
+};
+function spotifyThisSong() {
+
+};
+function movieThis() {
+
+};
+function doWhatItSays() {
+
+}
