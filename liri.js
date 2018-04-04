@@ -43,7 +43,9 @@ switch (action) {
 };
 
 function spotifyThisSong() {
- 
+    if(!value){
+        value = "The Sign, Ace of Base";
+    }
     spotify.search({ type: 'track', query: value, limit: 1 }, function(err, data) {
     if (err) {
     return console.log('Error occurred: ' + err);
@@ -57,6 +59,9 @@ function spotifyThisSong() {
 };
 
 function movieThis() {
+    if(!value){
+        value = "Mr. Nobody"
+    }
 
 	request("http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=1f2afee3", function(error, response, body) {
 
@@ -77,5 +82,14 @@ function movieThis() {
 };
 
 function doWhatItSays() {
-
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        if (error) {
+          return console.log(error);
+        } else {
+            result = data.split(",");
+            value = result[1];
+            spotifyThisSong(value);
+        }
+        
+    });
 }
