@@ -17,7 +17,6 @@ switch (action) {
       break;
     
     case "spotify-this-song":
-      console.log("This sucks")
       spotifyThisSong();
       break;
     
@@ -30,11 +29,15 @@ switch (action) {
       break;
     }
 
-function myTweets() {
+    function myTweets() {
     var params = {screen_name: "cmoore_leo27", count: 20};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
-    console.log(tweets);
+        for (let i = 0; i < tweets.length; i++) {
+            var tweet = tweets[i];
+            console.log(tweet.created_at, tweet.text);
+        
+        }
     }
     });
 };
@@ -45,8 +48,11 @@ function spotifyThisSong() {
     if (err) {
     return console.log('Error occurred: ' + err);
     }
- 
-    console.log(data.tracks.items[0]); 
+    var track = data.tracks.items[0]; 
+    console.log("Artist: " + track.artists[0].name);
+    console.log("Track: " + track.name);
+    console.log("Preview Link: " + track.external_urls.spotify);
+    console.log("Album: " + track.album.name);
     });
 };
 
