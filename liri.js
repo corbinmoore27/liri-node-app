@@ -1,11 +1,13 @@
 require("dotenv").config();
 
-var spotify = new Spotify(keys.spotify);
-var client = new Twitter(keys.twitter);
+var Twitter = require("twitter");
+var Spotify = require("node-spotify-api");
+var keys = require("./keys");
 var fs = require("fs");
 var request = require("request");
 
-
+var spotify = new Spotify(keys.spotify);
+var client = new Twitter(keys.twitter);
 var action = process.argv[2];
 var value = process.argv[3];
 
@@ -15,6 +17,7 @@ switch (action) {
       break;
     
     case "spotify-this-song":
+      console.log("This sucks")
       spotifyThisSong();
       break;
     
@@ -28,7 +31,7 @@ switch (action) {
     }
 
 function myTweets() {
-    var params = {screen_name: "cmoore_leo27"};
+    var params = {screen_name: "cmoore_leo27", count: 20};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
     console.log(tweets);
@@ -37,19 +40,13 @@ function myTweets() {
 };
 
 function spotifyThisSong() {
-    var Spotify = require('node-spotify-api');
  
-    var spotify = new Spotify({
-    id: f5fffa312e64592a63b2f20b5733ead,
-    secret: dc3ada7a9f444e5e90113f801af82dd6
-    });
- 
-    spotify.search({ type: 'track', query: value }, function(err, data) {
+    spotify.search({ type: 'track', query: value, limit: 1 }, function(err, data) {
     if (err) {
     return console.log('Error occurred: ' + err);
     }
  
-    console.log(data); 
+    console.log(data.tracks.items[0]); 
     });
 };
 
@@ -67,6 +64,8 @@ function movieThis() {
         console.log("Language: " + JSON.parse(body).Language)
         console.log("Plot: " + JSON.parse(body).Plot)
         console.log("Actors: " + JSON.parse(body).Actors)
+        } else {
+            console.log(error);  
         }	
 	});
 };
